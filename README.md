@@ -1,4 +1,4 @@
-# Trama: Tasks, Boards & Kanban
+# Trama - Tasks and Kanban Boards
 
 Trama is an Obsidian plugin for managing tasks and subtasks in **Table** and **Kanban** views. Each board is a single Markdown or JSON file in your vault, and task descriptions open in Obsidian’s native Markdown editor.
 
@@ -10,14 +10,14 @@ Trama is an Obsidian plugin for managing tasks and subtasks in **Table** and **K
 
 Trama requires Obsidian 1.8.7 or later.
 
-When Trama appears in the community directory, open **Settings → Community plugins → Browse** and search for **Trama: Tasks, Boards & Kanban**. Select **Install**, then **Enable**.
+When Trama appears in the community directory, open **Settings → Community plugins → Browse** and search for **Trama - Tasks and Kanban Boards**. Select **Install**, then **Enable**.
 
 To install from a [GitHub release](https://github.com/LeGustaVinho/trama-obsidian/releases):
 
 1. Download the three release assets `main.js`, `manifest.json`, and `styles.css`. To build them locally instead, run `npm ci` and `npm run build` with Node.js 22.13 or later, then collect the files from `dist/`.
 2. Create `trama-tasks-boards-kanban` inside your vault’s `.obsidian/plugins/` directory. If your vault uses a custom configuration folder, use that folder in place of `.obsidian`.
 3. Copy all three files into that plugin folder.
-4. In Obsidian, open **Settings → Community plugins** and enable **Trama: Tasks, Boards & Kanban**. If Restricted Mode is on, turn it off first.
+4. In Obsidian, open **Settings → Community plugins** and enable **Trama - Tasks and Kanban Boards**. If Restricted Mode is on, turn it off first.
 
 ## Quick start
 
