@@ -117,7 +117,8 @@ export class DependencyPicker {
     });
     section.addEventListener("focusout", (event) => {
       const win = section.ownerDocument.defaultView;
-      if (!this.panel.hidden && win && event.relatedTarget instanceof win.Node && !section.contains(event.relatedTarget)) {
+      const next = event.relatedTarget as Node | null;
+      if (!this.panel.hidden && win && next?.instanceOf?.(win.Node) && !section.contains(next)) {
         this.setOpen(false, false);
       }
     });

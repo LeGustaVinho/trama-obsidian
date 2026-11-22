@@ -93,9 +93,10 @@ export class MarkdownPreview {
     component.registerDomEvent(body, "click", (event) => {
       if (event.defaultPrevented || event.button !== 0) return;
       const win = body.ownerDocument.defaultView;
-      if (!win || !(event.target instanceof win.Node)) return;
-      const target = event.target instanceof win.Element ? event.target : event.target.parentElement;
-      const link = target?.closest<HTMLAnchorElement>("a.internal-link");
+      const target = event.target as Node | null;
+      if (!win || !target?.instanceOf?.(win.Node)) return;
+      const element = target.instanceOf(win.Element) ? target : target.parentElement;
+      const link = element?.closest<HTMLAnchorElement>("a.internal-link");
       const href = link?.getAttribute("data-href") ?? link?.getAttribute("href");
       if (!href) return;
       event.preventDefault();
@@ -183,7 +184,7 @@ export class StatusModal extends BoardModal {
   }
 }
 
-export async function copyItemLink(app: App, board: Board, id: string, clipboard: Clipboard): Promise<void> {
+export async function copyItemLink(app: App, board: Board, id: string, clipboard: Pick<Clipboard, "writeText">): Promise<void> {
   const params = new URLSearchParams({ vault: app.vault.getName(), board: board.id, item: id });
   await clipboard.writeText(`obsidian://${manifest.id}?${params.toString().replace(/\+/g, "%20")}`);
   new Notice(t("Link copied."));

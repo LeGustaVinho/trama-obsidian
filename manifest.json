@@ -1,7 +1,7 @@
 {
   "id": "trama-tasks-boards-kanban",
   "name": "Trama - Tasks and Kanban Boards",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "minAppVersion": "1.8.7",
   "description": "View and edit tasks and subtasks in Table and Kanban views using Markdown or JSON boards.",
   "author": "Trama: Tasks, Boards & Kanban",

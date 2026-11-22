@@ -64,6 +64,10 @@ Both formats use the same versioned board model. Markdown stores the board struc
 
 Trama reads and writes boards locally in your vault and has no telemetry. When Obsidian renders a description that references an external image or web embed, it may contact the host specified in that Markdown to display the content.
 
+Board discovery uses Obsidian’s vault index to find boards in any folder. Trama checks Markdown metadata and reads candidate Markdown and JSON files locally. The board picker and task links use this lookup, including when a board has moved.
+
+**Copy link** writes the selected task’s Obsidian link to the system clipboard when you click it. The link includes the vault name and the board and task IDs.
+
 If you used a development build that stored descriptions in separate draft notes, review any remaining draft notes in your vault. You can copy edits from those notes into the matching task description.
 
 ### Language
@@ -81,6 +85,8 @@ Run these commands from the plugin directory.
 | `npm run check` | Type-check the plugin |
 | `npm test` | Verify board formats, editing rules, and translation coverage |
 | `npm run build` | Type-check and write the installable plugin files to `dist/` |
+
+For each version tag, [GitHub Actions](https://github.com/LeGustaVinho/trama-obsidian/actions/workflows/release-assets.yml) builds and attests the three release assets. Verify a downloaded asset with `gh attestation verify main.js --repo LeGustaVinho/trama-obsidian`.
 
 ## License
 

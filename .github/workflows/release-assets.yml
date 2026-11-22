@@ -1,0 +1,64 @@
+name: Build and attest release assets
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - name: Check out the tagged source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Verify the release version
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
+          const tag = process.env.GITHUB_REF_NAME;
+          const manifest = readJson('manifest.json');
+          assert.match(tag, /^\d+\.\d+\.\d+$/);
+          assert.equal(manifest.version, tag);
+          assert.equal(readJson('package.json').version, tag);
+          assert.equal(readJson('versions.json')[tag], manifest.minAppVersion);
+          NODE
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Lint, test, and build
+        run: |
+          npm run lint
+          npm test
+          npm run build
+      - name: Attest the installable files
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: |
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css
+      - name: Upload the attested assets
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-assets
+          path: |
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css
+          if-no-files-found: error
