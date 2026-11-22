@@ -1,0 +1,30 @@
+{
+  "name": "trama-tasks-boards-kanban",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit",
+    "lint": "eslint src manifest.json package.json LICENSE --max-warnings 0",
+    "test": "node build.mjs --test && node --test .test-build/board.test.cjs",
+    "build": "npm run check && node build.mjs"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2",
+    "eslint": "9.39.5",
+    "eslint-plugin-obsidianmd": "0.6.0",
+    "obsidian": "1.14.4",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "@microsoft/eslint-plugin-sdl": {
+      "eslint-plugin-n": "17.24.0"
+    }
+  }
+}

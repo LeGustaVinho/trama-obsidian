@@ -1,0 +1,55 @@
+{
+  "type": "task-board",
+  "schemaVersion": 1,
+  "id": "entrega-json",
+  "title": "Entrega do portal",
+  "statuses": [
+    { "id": "todo", "title": "A fazer", "done": false },
+    { "id": "doing", "title": "Em andamento", "done": false },
+    { "id": "done", "title": "Concluída", "done": true }
+  ],
+  "tasks": [
+    {
+      "id": "avaliar",
+      "title": "Avaliar a entrega",
+      "description": "Confira [[Contexto]] e a imagem.\n\n![Esboço do portal](portal.png)\n\n```mermaid\nflowchart LR\n    Teste --> Revisao[Revisão]\n```",
+      "status": "doing",
+      "dependsOn": ["preparar"],
+      "git": { "branch": "feature/portal", "commit": "c0ffee1" },
+      "subtasks": [
+        {
+          "id": "testar",
+          "title": "Testar navegação",
+          "description": "> [!tip] Roteiro\n> Teste os links do menu em uma janela estreita.\n\n![[Contexto]]",
+          "status": "done",
+          "dependsOn": []
+        },
+        {
+          "id": "revisar",
+          "title": "Revisar resultados",
+          "description": "Compare a saída com o arquivo de referência.\n\n```text\nstatus: aprovado\n```",
+          "status": "todo",
+          "dependsOn": ["testar"],
+          "git": { "branch": "review/portal" }
+        }
+      ]
+    },
+    {
+      "id": "preparar",
+      "title": "Preparar ambiente",
+      "description": "Crie o ambiente de teste.",
+      "status": "todo",
+      "dependsOn": [],
+      "subtasks": []
+    },
+    {
+      "id": "prototipo",
+      "title": "Publicar protótipo",
+      "description": "Protótipo entregue.",
+      "status": "done",
+      "dependsOn": [],
+      "archived": true,
+      "subtasks": []
+    }
+  ]
+}

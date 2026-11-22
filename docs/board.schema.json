@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task Board v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "schemaVersion", "id", "title", "statuses", "tasks"],
+  "properties": {
+    "type": { "const": "task-board" },
+    "schemaVersion": { "const": 1 },
+    "id": { "$ref": "#/definitions/id" },
+    "title": { "$ref": "#/definitions/label" },
+    "statuses": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/status" }
+    },
+    "tasks": { "type": "array", "items": { "$ref": "#/definitions/task" } }
+  },
+  "definitions": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "label": { "type": "string", "pattern": "^[^\\r\\n]*\\S[^\\r\\n]*$" },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "done"],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "title": { "$ref": "#/definitions/label" },
+        "done": { "type": "boolean" }
+      }
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "branch": { "$ref": "#/definitions/label" },
+        "commit": { "$ref": "#/definitions/label" }
+      }
+    },
+    "subtask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "description", "status", "dependsOn"],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "title": { "$ref": "#/definitions/label" },
+        "description": { "type": "string" },
+        "status": { "$ref": "#/definitions/id" },
+        "dependsOn": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "git": { "$ref": "#/definitions/git" }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "description", "status", "dependsOn", "subtasks"],
+      "properties": {
+        "id": { "$ref": "#/definitions/id" },
+        "title": { "$ref": "#/definitions/label" },
+        "description": { "type": "string" },
+        "status": { "$ref": "#/definitions/id" },
+        "dependsOn": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/id" }
+        },
+        "git": { "$ref": "#/definitions/git" },
+        "archived": { "type": "boolean" },
+        "subtasks": { "type": "array", "items": { "$ref": "#/definitions/subtask" } }
+      }
+    }
+  }
+}
